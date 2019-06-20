@@ -1,0 +1,68 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script>
+         //用于保存用户输入数据
+        var Student = {
+            create: function () {
+                Id: "";
+                Name: "";
+                ClassName: "";
+                Gender: "";
+                return Student;
+            }
+        }
+
+        $(document).ready(function () {
+            //添加一条记录 请求类型:POST  请求url:  /api/Products
+            //请求到ProductsController.cs中的 public HttpResponseMessage PostProduct(Product item) 方法
+            $("#addItem").click(function () {
+                var newStudent = Student.create();
+                newStudent.Name = $("#name").val();
+                newStudent.ClassName = $("#classname").val();
+                newStudent.Gender = $("#gender").val();
+
+                $.ajax({
+                    url: "/api/Student",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(newProduct),
+                    success: function (data) {
+                        debugger
+                        if (data.Name == "" || data.ClassName == "" || data.Gender == "") {
+                            alert("Name或Category或Price不能为空！");
+                        }
+                        else {
+                            alert("添加成功！");
+                        }
+                       
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("请求失败，消息：" + textStatus + "  " + errorThrown);
+                    }
+                });
+            });
+    </script>
+
+
+
+</head>
+<body>
+    <div>
+        <section>
+            <h2>添加记录</h2>
+            Name:<input id="name" type="text" /><br />
+            ClassName:<input id="classname" type="text" />
+            Gender:<input id="gender" type="text" /><br />
+            <input id="addItem" type="button" value="添加" />
+        </section>
+    </div>
+</body>
+</html>
